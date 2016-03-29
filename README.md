@@ -1,6 +1,7 @@
 # SimpleTcp
 
-**TODO: Add description**
+[![Build
+Status](https://semaphoreci.com/api/v1/VladimirMikhailov/elixir_simple_tcp/branches/master/badge.svg)](https://semaphoreci.com/VladimirMikhailov/elixir_simple_tcp)
 
 ## Installation
 
@@ -9,7 +10,7 @@ If [available in Hex](https://hex.pm/docs/publish), the package can be installed
   1. Add simple_tcp to your list of dependencies in `mix.exs`:
 
         def deps do
-          [{:simple_tcp, "~> 0.0.1"}]
+          [{:simple_tcp, git: "https://github.com/VladimirMikhailov/elixir_simple_tcp.git"}]
         end
 
   2. Ensure simple_tcp is started before your application:
@@ -18,3 +19,8 @@ If [available in Hex](https://hex.pm/docs/publish), the package can be installed
           [applications: [:simple_tcp]]
         end
 
+## Run
+
+  1. Run `iex -S mix`
+
+  2. Use telnet clients: `telnet localhost 8000`
