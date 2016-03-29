@@ -3,7 +3,6 @@ defmodule SimpleTcp.Sender do
     Implements GenServer and and sends
     messages via Erlang's gproc by brodcasting messages
   """
-
   use GenServer
   import Socket
 

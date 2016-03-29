@@ -8,7 +8,6 @@ defmodule SimpleTcp.Worker do
 
       # Starts listening on 9000 port
   """
-
   import Socket
 
   def start_link(port) do
@@ -30,7 +29,7 @@ defmodule SimpleTcp.Worker do
   end
 
   defp init_listener(client) do
-    {:ok, pid} = SimpleTcp.Sender.start_link(client)
+    {:ok, _pid} = SimpleTcp.Sender.start_link(client)
     listen_for_msg(client)
   end
 

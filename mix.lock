@@ -1,2 +1,5 @@
-%{"dogma": {:hex, :dogma, "0.1.4"},
-  "poison": {:hex, :poison, "2.1.0"}}
+%{"connection": {:hex, :connection, "1.0.2"},
+  "dogma": {:hex, :dogma, "0.1.4"},
+  "gproc": {:hex, :gproc, "0.5.0"},
+  "poison": {:hex, :poison, "2.1.0"},
+  "socket": {:hex, :socket, "0.3.1"}}

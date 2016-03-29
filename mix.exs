@@ -14,7 +14,8 @@ defmodule SimpleTcp.Mixfile do
   #
   # Type "mix help compile.app" for more information
   def application do
-    [applications: [:logger]]
+    [applications: [:logger, :connection, :gproc, :socket],
+    mod: {SimpleTcp, []}]
   end
 
   # Dependencies can be Hex packages:
@@ -29,6 +30,9 @@ defmodule SimpleTcp.Mixfile do
   defp deps do
     [
       {:dogma, "~> 0.1", only: :dev},
+      {:connection, "1.0.2" },
+      {:gproc, "~> 0.5"},
+      {:socket, "~> 0.3"}
     ]
   end
 end
