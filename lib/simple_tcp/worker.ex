@@ -39,7 +39,9 @@ defmodule SimpleTcp.Worker do
         GenServer.cast({:via, :gproc, {:p, :l, :something}}, {:msg, data})
         listen_for_msg(client)
       {:error, :closed} -> :ok
-      other -> IO.inspect(other)
+      other ->
+        Socket.Stream.close(client)
+        IO.inspect(other)
     end
   end
 end

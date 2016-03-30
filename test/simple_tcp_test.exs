@@ -2,8 +2,6 @@ defmodule SimpleTcpTest do
   use ExUnit.Case
   doctest SimpleTcp
 
-  import Socket
-
   setup do
     :ok = Application.ensure_started(:simple_tcp)
 
