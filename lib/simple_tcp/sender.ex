@@ -1,10 +1,9 @@
 defmodule SimpleTcp.Sender do
   @moduledoc """
-    Implements GenServer and and sends
-    messages via Erlang's gproc by brodcasting messages
+  Implements GenServer and and sends
+  messages via Erlang's gproc by brodcasting messages
   """
   use GenServer
-  import Socket
 
   def start_link(socket, opts \\ []) do
     GenServer.start_link(__MODULE__, [socket: socket], opts)
