@@ -14,7 +14,13 @@ defmodule SimpleTcp.Sender do
     {:ok, socket}
   end
 
-  def handle_cast({:msg, msg}, [socket: socket] = state) do
+  def handle_cast({:msg, _msg, client}, [socket: socket] = state)
+      when client == socket do
+
+    {:noreply, state}
+  end
+
+  def handle_cast({:msg, msg, client}, [socket: socket] = state) do
     Socket.Stream.send(socket, msg)
     {:noreply, state}
   end

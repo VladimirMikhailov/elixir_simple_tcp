@@ -30,12 +30,16 @@ defmodule SimpleTcp.Worker do
   defp listen_for_msg(client) do
     case Socket.Stream.recv(client) do
       {:ok, data} ->
-        GenServer.cast({:via, :gproc, {:p, :l, :something}}, {:msg, data})
+        cast_message({:msg, data, client})
         listen_for_msg(client)
       {:error, :closed} -> :ok
       other ->
         Socket.Stream.close(client)
         IO.inspect(other)
     end
+  end
+
+  defp cast_message(msg) do
+    GenServer.cast({:via, :gproc, {:p, :l, :something}}, msg)
   end
 end
