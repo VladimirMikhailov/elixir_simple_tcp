@@ -1,6 +1,6 @@
 defmodule SimpleTcp do
   @moduledoc """
-    A Simple TCP serverb built on top of GenServer signals
+  Start a worker process and attach the Supervisor
   """
 
   use Application

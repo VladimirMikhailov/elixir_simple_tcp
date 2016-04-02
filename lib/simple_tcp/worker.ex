@@ -1,14 +1,8 @@
 defmodule SimpleTcp.Worker do
   @moduledoc """
-    Worker process accepting tcp connections
-    in loop and starting sender for each new one.
-
-    Examples:
-      iex> SimpleTcp.Worker.start_link(9000)
-
-      # Starts listening on 9000 port
+  Start loop over listening for a new tcp
+  connections and spawn a process for every
   """
-  import Socket
 
   def start_link(port) do
     pid = spawn_link(fn -> init(port) end)
@@ -36,12 +30,16 @@ defmodule SimpleTcp.Worker do
   defp listen_for_msg(client) do
     case Socket.Stream.recv(client) do
       {:ok, data} ->
-        GenServer.cast({:via, :gproc, {:p, :l, :something}}, {:msg, data})
+        cast_message({:msg, data, client})
         listen_for_msg(client)
       {:error, :closed} -> :ok
       other ->
         Socket.Stream.close(client)
         IO.inspect(other)
     end
+  end
+
+  defp cast_message(msg) do
+    GenServer.cast({:via, :gproc, {:p, :l, :something}}, msg)
   end
 end
