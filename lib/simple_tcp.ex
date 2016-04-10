@@ -9,7 +9,7 @@ defmodule SimpleTcp do
     import Supervisor.Spec, warn: false
 
     children = [
-      worker(SimpleTcp.Worker, [8000])
+      worker(SimpleTcp.Server, [8000])
     ]
 
     opts = [strategy: :one_for_one, name: SimpleTcp.Supervisor]
