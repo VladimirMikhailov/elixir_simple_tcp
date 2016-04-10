@@ -10,7 +10,6 @@ defmodule SimpleTcp.Client do
 
   def init([socket: socket] = state) do
     :gproc.reg({:p, :l, :something})
-    {:ok, _pid} = SimpleTcp.Listener.start_link(socket)
 
     {:ok, state}
   end
