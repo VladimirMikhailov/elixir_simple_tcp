@@ -3,13 +3,14 @@ defmodule SimpleTcp.Client do
   Handles cast messages sent from mates.
   """
   use GenServer
+  import SimpleTcp.Command, only: [tuple_key: 1]
 
   def start_link(state) do
     GenServer.start_link(__MODULE__, state)
   end
 
   def init(%{room: room} = state) do
-    :gproc.reg({:p, :l, {:room, room}})
+    room |> tuple_key |> :gproc.reg
     {:ok, state}
   end
 

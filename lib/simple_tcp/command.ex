@@ -10,6 +10,10 @@ defmodule SimpleTcp.Command do
   end
 
   def via_tuple(room) do
-    {:via, :gproc, {:p, :l, {:room, room}}}
+    {:via, :gproc, tuple_key(room) }
+  end
+
+  def tuple_key(room) do
+    {:p, :l, {:room, room}}
   end
 end
