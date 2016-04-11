@@ -4,21 +4,20 @@ defmodule SimpleTcp.Client do
   """
   use GenServer
 
-  def start_link(socket, opts \\ []) do
-    GenServer.start_link(__MODULE__, [socket: socket], opts)
+  def start_link(state) do
+    GenServer.start_link(__MODULE__, state)
   end
 
-  def init([socket: socket] = state) do
-    :gproc.reg({:p, :l, :something})
-
+  def init(%{room: room} = state) do
+    :gproc.reg({:p, :l, {:room, room}})
     {:ok, state}
   end
 
-  def handle_cast({:msg, _msg, socket}, [socket: socket] = state) do
+  def handle_cast({socket}, %{socket: socket} = state) do
     {:noreply, state}
   end
 
-  def handle_cast({:msg, msg, _}, [socket: socket] = state) do
+  def handle_cast({:msg, msg, _}, %{socket: socket} = state) do
     Socket.Stream.send(socket, msg)
     {:noreply, state}
   end
