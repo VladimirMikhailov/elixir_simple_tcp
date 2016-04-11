@@ -1,4 +1,9 @@
 defmodule SimpleTcp.Command do
+  @moduledoc """
+  Handles all input requests and runs a command
+  or casts a message
+  """
+
   def exec(msg, %{room: room, socket: socket} = state) do
     room |> via_tuple |> cast_message(msg, socket)
 

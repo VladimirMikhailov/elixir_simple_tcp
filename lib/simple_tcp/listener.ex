@@ -16,7 +16,7 @@ defmodule SimpleTcp.Listener do
   defp listen_for_msg(%{socket: socket} = state) do
     case Socket.Stream.recv(socket) do
       {:ok, data} ->
-        cast_message(data, state) |> listen_for_msg
+        data |> cast_message(state) |> listen_for_msg
       {:error, :closed} -> :ok
       _ -> Socket.Stream.close(socket)
     end
