@@ -4,16 +4,16 @@ defmodule SimpleTcp.Command do
   or casts a message
 
   Available commands are:
-    /c ROOM_NAME - Connect to a new room name
+    /c ROOM_NAME - Connect to a new channel name
   """
 
-  @commands %{connect: ~r/\A\/c\s(?<room>.+)\r/u}
+  @commands %{connect: ~r/\A\/c\s(?<channel>.+)\r/u}
 
   import SimpleTcp.Cast, only: [via_tuple: 1]
 
   def exec(nil, state), do: state
-  def exec(msg, %{room: room} = state) do
-    room |> via_tuple |> perform(msg, state)
+  def exec(msg, %{channel: channel} = state) do
+    channel |> via_tuple |> perform(msg, state)
   end
 
   defp perform(tuple, msg, state) do
@@ -30,9 +30,9 @@ defmodule SimpleTcp.Command do
     GenServer.cast(tuple, {:msg, msg, socket}) && state
   end
 
-  def connect(tuple, %{"room" => room}, %{socket: socket} = state) do
-    GenServer.cast(tuple, {:reconnect, room, socket})
-    %{state | room: room}
+  def connect(tuple, %{"channel" => channel}, %{socket: socket} = state) do
+    GenServer.cast(tuple, {:reconnect, channel, socket})
+    %{state | channel: channel}
   end
 
   defp command_expression(msg) do

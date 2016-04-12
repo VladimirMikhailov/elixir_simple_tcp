@@ -4,11 +4,11 @@ defmodule SimpleTcp.Cast do
     through genserver using gproc
   """
 
-  def via_tuple(room) do
-    {:via, :gproc, tuple_key(room) }
+  def via_tuple(channel) do
+    {:via, :gproc, tuple_key(channel) }
   end
 
-  def tuple_key(room) do
-    {:p, :l, {:room, room}}
+  def tuple_key(channel) do
+    {:p, :l, {:channel, channel}}
   end
 end

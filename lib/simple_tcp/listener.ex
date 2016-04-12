@@ -4,11 +4,11 @@ defmodule SimpleTcp.Listener do
   and casts inputs to all clients
   """
 
-  @room "default"
+  @channel "default"
 
   def start_link(socket) do
-    {:ok, _pid} = SimpleTcp.Client.start_link(%{socket: socket, room: @room})
-    pid = spawn_link(fn -> listen_for_msg(%{socket: socket, room: @room}) end)
+    {:ok, _pid} = SimpleTcp.Client.start_link(%{socket: socket, channel: @channel})
+    pid = spawn_link(fn -> listen_for_msg(%{socket: socket, channel: @channel}) end)
 
     {:ok, pid}
   end

@@ -9,17 +9,17 @@ defmodule SimpleTcp.Client do
     GenServer.start_link(__MODULE__, state)
   end
 
-  def init(%{room: room} = state) do
-    room |> tuple_key |> :gproc.reg
+  def init(%{channel: channel} = state) do
+    channel |> tuple_key |> :gproc.reg
     {:ok, state}
   end
 
-  def handle_cast({:reconnect, room, socket}, %{socket: socket} = state) do
-    spawn(fn -> SimpleTcp.Client.start_link(%{state | room: room}) end)
-    {:stop, "Left a room", state}
+  def handle_cast({:reconnect, channel, socket}, %{socket: socket} = state) do
+    spawn(fn -> SimpleTcp.Client.start_link(%{state | channel: channel}) end)
+    {:stop, "Left a channel", state}
   end
 
-  def handle_cast({:reconnect, _room, _socket}, state) do
+  def handle_cast({:reconnect, _channel, _socket}, state) do
     {:noreply, state}
   end
 
