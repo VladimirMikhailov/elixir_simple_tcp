@@ -9,8 +9,10 @@ defmodule SimpleTcp.Client do
     GenServer.start_link(__MODULE__, state)
   end
 
-  def init(%{channel: channel} = state) do
+  def init(%{channel: channel, socket: socket} = state) do
     channel |> tuple_key |> :gproc.reg
+    Socket.Stream.send(socket, "You're entered #{channel} channel\n")
+
     {:ok, state}
   end
 
