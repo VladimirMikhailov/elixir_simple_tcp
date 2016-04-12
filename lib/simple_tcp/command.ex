@@ -2,23 +2,40 @@ defmodule SimpleTcp.Command do
   @moduledoc """
   Handles all input requests and runs a command
   or casts a message
+
+  Available commands are:
+    /c ROOM_NAME - Connect to a new room name
   """
 
-  def exec(msg, %{room: room, socket: socket} = state) do
-    room |> via_tuple |> cast_message(msg, socket)
+  @commands %{connect: ~r/\A\/c\s(?<room>.+)\r/u}
 
-    state
+  import SimpleTcp.Cast, only: [via_tuple: 1]
+
+  def exec(nil, state), do: state
+  def exec(msg, %{room: room} = state) do
+    room |> via_tuple |> perform(msg, state)
   end
 
-  defp cast_message(tuple, msg, socket) do
-    GenServer.cast(tuple, {:msg, msg, socket})
+  defp perform(tuple, msg, state) do
+    case command_expression(msg) do
+      {command, expression} ->
+        apply(__MODULE__, command, [tuple, Regex.named_captures(expression, msg), state])
+
+      _other ->
+        cast_message(tuple, msg, state)
+    end
   end
 
-  def via_tuple(room) do
-    {:via, :gproc, tuple_key(room) }
+  defp cast_message(tuple, msg, %{socket: socket} = state) do
+    GenServer.cast(tuple, {:msg, msg, socket}) && state
   end
 
-  def tuple_key(room) do
-    {:p, :l, {:room, room}}
+  def connect(tuple, %{"room" => room}, %{socket: socket} = state) do
+    GenServer.cast(tuple, {:reconnect, room, socket})
+    %{state | room: room}
+  end
+
+  defp command_expression(msg) do
+    Enum.find(@commands, fn {_, expression} -> Regex.named_captures(expression, msg) end)
   end
 end

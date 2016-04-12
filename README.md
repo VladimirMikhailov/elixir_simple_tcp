@@ -24,3 +24,9 @@ If [available in Hex](https://hex.pm/docs/publish), the package can be installed
   1. Run `iex -S mix`
 
   2. Use telnet clients: `telnet localhost 8000`
+
+## Commands
+
+  `/c NEW ROOM` - you can reconnect to another channel. Channels don't
+  accumulate your messages and it's should be connected client to hear
+  your messages
