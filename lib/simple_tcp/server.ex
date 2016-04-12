@@ -23,7 +23,6 @@ defmodule SimpleTcp.Server do
   end
 
   defp init_client(client) do
-    {:ok, _pid} = SimpleTcp.Client.start_link(client)
     {:ok, _pid} = SimpleTcp.Listener.start_link(client)
   end
 end

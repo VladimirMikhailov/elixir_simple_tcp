@@ -2,10 +2,8 @@ defmodule SocketsCase do
   use ExUnit.CaseTemplate
 
   setup_all do
-    opts = [:binary, packet: :line, active: false]
-
-    {:ok, sender} = :gen_tcp.connect('localhost', 8000, opts)
-    {:ok, receiver} = :gen_tcp.connect('localhost', 8000, opts)
+    sender = init_socket
+    receiver = init_socket
 
     on_exit fn ->
       :gen_tcp.close(sender)
@@ -13,5 +11,13 @@ defmodule SocketsCase do
     end
 
     {:ok, [sender: sender, receiver: receiver]}
+  end
+
+  defp init_socket do
+    opts = [:binary, packet: :line, active: false]
+    {:ok, socket} = :gen_tcp.connect('localhost', 8000, opts)
+    {:ok, "You're entered default channel\n"} = :gen_tcp.recv(socket, 0)
+
+    socket
   end
 end
