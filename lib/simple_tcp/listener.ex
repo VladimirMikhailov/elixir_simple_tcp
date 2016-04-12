@@ -8,9 +8,7 @@ defmodule SimpleTcp.Listener do
 
   def start_link(socket) do
     {:ok, _pid} = SimpleTcp.Client.start_link(%{socket: socket, channel: @channel})
-    pid = spawn_link(fn -> listen_for_msg(%{socket: socket, channel: @channel}) end)
-
-    {:ok, pid}
+    listen_for_msg(%{socket: socket, channel: @channel})
   end
 
   defp listen_for_msg(%{socket: socket} = state) do
