@@ -18,7 +18,7 @@ defmodule SimpleTcp.Client do
 
   def handle_cast({:reconnect, channel, socket}, %{socket: socket} = state) do
     spawn(fn -> SimpleTcp.Client.start_link(%{state | channel: channel}) end)
-    {:stop, "Left a channel", state}
+    {:stop, :normal, state}
   end
 
   def handle_cast({:reconnect, _channel, _socket}, state) do

@@ -2,8 +2,8 @@ defmodule SocketsCase do
   use ExUnit.CaseTemplate
 
   setup_all do
-    sender = init_socket
-    receiver = init_socket
+    sender = init_socket()
+    receiver = init_socket()
 
     on_exit fn ->
       :gen_tcp.close(sender)

@@ -7,13 +7,13 @@ defmodule SimpleTcpTest do
   end
 
   test "handle cast for same socket", %{sender: sender} do
-    listen_message(self, sender)
+    listen_message(self(), sender)
 
     assert_received({:error, :timeout})
   end
 
   test "hearing a brodacasting message", %{receiver: receiver} do
-    listen_message(self, receiver)
+    listen_message(self(), receiver)
 
     assert_received({:ok, "Hello, world!\n"})
   end
